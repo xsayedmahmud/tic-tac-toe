@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="shortcut icon"
+      href="logo-icon/favicon_io/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,200;0,400;1,600&family=Slackside+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="block1">
+        <img src="logo-icon/logo.png" alt="" />
+      </div>
+      <div class="block2">
+        <h1>Tic Tac Toe</h1>
+      </div>
+      <div class="block3"></div>
+      <div class="block4">
+        <div class="game">
+          <div class="gameMood">
+            <select name="gameMood" id="gameMood">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="impossible">Impossible</option>
+              <option value="playAgainst">Play against a friend</option>
+            </select>
+          </div>
+          <div class="gameLog">
+            <div class="playerA">
+              <h3>Player A</h3>
+              <input type="text" name="playerA" id="playerA" />
+              <img src="logo-icon/edit.svg" alt="edit" class="edit" />
+              <img src="logo-icon/done-700.svg" alt="done" class="done" />
+              <p class="scoreA">Score: 4 / 10</p>
+            </div>
+            <div class="playerB">
+              <h3>Player B</h3>
+              <input type="text" name="PlayerB" id="PlayerB" />
+              <img src="logo-icon/edit.svg" alt="edit" class="edit" />
+              <img src="logo-icon/done-700.svg" alt="done" class="done" />
+              <p class="scoreB">Score: 4 / 10</p>
+            </div>
+            <div class="tie">
+              <h3>Tie</h3>
+              <p>2 / 10</p>
+            </div>
+          </div>
+          <div class="gameBoard">
+            <div class="cells">
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+            </div>
+          </div>
+          <div class="restartBar">
+            <button>Restart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

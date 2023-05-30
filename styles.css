@@ -1,0 +1,330 @@
+/* reset  */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* general */
+
+:root {
+  --bg-color: #f2f4fb;
+  --color-1: #d22780;
+  --color-2: #f8b500;
+  --color-3: #5e227f;
+  --font-bitter: "Bitter", serif;
+  --font-slackside: "Slackside One", cursive;
+}
+
+:root {
+  --shadow-color: 286deg 36% 56%;
+  --shadow-elevation-low: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+}
+.container {
+  display: grid;
+  grid-template:
+    "block1 block2" clamp(60px, 10vw, 100px)
+    "block3 block4" 1fr / clamp(100px, 10vw, 300px) 1fr;
+  height: 100vh;
+  width: 100vw;
+  padding: clamp(20px, 3vw, 50px);
+  font-family: var(--font-bitter);
+  transition: grid-template 0.3s ease-out, border 0.3s ease-out;
+}
+
+.block1 {
+  grid-area: block1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.block2 {
+  grid-area: block2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.block3 {
+  grid-area: block3;
+}
+
+.block4 {
+  grid-area: block4;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.block1,
+.block2 {
+  border-bottom: 5px solid var(--color-3);
+}
+
+.block1,
+.block3 {
+  border-right: 5px solid var(--color-3);
+}
+
+.block1 img {
+  width: clamp(35px, 8vw, 80px);
+}
+
+.block2 h1 {
+  font-family: var(--font-slackside);
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin-bottom: clamp(10px, 3vw, 50px);
+  color: var(--color-3);
+  text-shadow: var(--color-1) 4px 3px 0px;
+}
+
+/* game  */
+
+.game {
+  width: clamp(300px, 90%, 1200px);
+  display: grid;
+  grid-template:
+    "gameMood gameMood" 50px
+    "gameLog gameBoard" 1fr
+    "restartBar restartBar" clamp(40px, 4vw, 60px) / clamp(110px, 15vw, 200px) 1fr;
+  box-shadow: var(--shadow-elevation-low);
+  border-radius: 20px;
+}
+
+.gameMood {
+  grid-area: gameMood;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.gameMood select {
+  /* appearance: none; */
+  border: none;
+  border-bottom: 2px solid var(--color-2);
+  outline: none;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 0 5px;
+  color: var(--color-1);
+  font-weight: 600;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+}
+
+.gameLog {
+  grid-area: gameLog;
+  position: relative;
+  display: grid;
+  align-items: start;
+  grid-template-rows: repeat(3, min-content);
+  gap: clamp(10px, 3vw, 50px);
+
+  background-color: var(--bg-color);
+  padding: clamp(10px, 3vw, 50px);
+  padding-right: 0;
+}
+
+.gameLog input {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: var(--shadow-elevation-low);
+  padding: 0 5px;
+  display: none;
+  color: var(--color-1);
+  background-color: var(--bg-color);
+}
+
+.gameLog img {
+  position: absolute;
+  width: clamp(0.9rem, 2vw, 1.5rem);
+  right: 0;
+  top: 3px;
+  cursor: pointer;
+}
+
+.gameLog h3 {
+  color: var(--color-1);
+  font-size: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+.gameLog p {
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+}
+.playerA,
+.playerB {
+  position: relative;
+}
+
+.playerA .done,
+.playerB .done {
+  display: none;
+}
+
+/* gameBoard // */
+
+.gameBoard {
+  grid-area: gameBoard;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(10px, 2vw, 20px);
+}
+
+.gameBoard .cells {
+  width: clamp(200px, 60%, 500px);
+  aspect-ratio: 1 /1;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.cells .cell {
+  transition: all 0.2s cubic-bezier(0.32, 0.91, 0.63, 1.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-slackside);
+}
+
+.cells .cell:active {
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.cells .cell:nth-child(1),
+.cells .cell:nth-child(2),
+.cells .cell:nth-child(3) {
+  border-bottom: clamp(2px, 0.4vw, 5px) solid var(--color-3);
+}
+
+.cells .cell:nth-child(1),
+.cells .cell:nth-child(4),
+.cells .cell:nth-child(7) {
+  border-right: clamp(2px, 0.4vw, 5px) solid var(--color-3);
+}
+
+.cells .cell:nth-child(3),
+.cells .cell:nth-child(6),
+.cells .cell:nth-child(9) {
+  border-left: clamp(2px, 0.4vw, 5px) solid var(--color-3);
+}
+
+.cells .cell:nth-child(7),
+.cells .cell:nth-child(8),
+.cells .cell:nth-child(9) {
+  border-top: clamp(2px, 0.4vw, 5px) solid var(--color-3);
+}
+
+/* resetBar  */
+.restartBar {
+  grid-area: restartBar;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restartBar button {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(1rem, 2vw, 2rem);
+
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  border-radius: 0 0 20px 20px;
+}
+
+.restartBar button:active {
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.restartBar button::before,
+.restartBar button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 2px;
+  background-color: var(--color-2);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+.restartBar button::before {
+  left: 1px;
+  transform-origin: right center;
+}
+
+.restartBar button::after {
+  right: 0px;
+  transform-origin: left center;
+}
+
+.restartBar button:hover:before,
+.restartBar button:hover:after {
+  transform: scaleX(1);
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    grid-template:
+      "block1 block2" 30px
+      "block4 block4" 1fr / clamp(100px, 10vw, 300px) 1fr;
+  }
+
+  .block3 {
+    display: none;
+  }
+
+  .block1,
+  .block2 {
+    border: none;
+  }
+}
