@@ -47,8 +47,9 @@ h6 {
   --color-1: #d22780;
   --color-2: #f8b500;
   --color-3: #5e227f;
-  --font-bitter: "Bitter", serif;
-  --font-slackside: "Slackside One", cursive;
+  --font-bitter: 'Bitter', serif;
+  --font-slackside: 'Slackside One', cursive;
+  --font-oswald: 'Oswald', sans-serif;
 }
 
 :root {
@@ -64,8 +65,8 @@ h6 {
 .container {
   display: grid;
   grid-template:
-    "block1 block2" clamp(60px, 10vw, 100px)
-    "block3 block4" 1fr / clamp(100px, 10vw, 300px) 1fr;
+    'block1 block2' clamp(60px, 10vw, 100px)
+    'block3 block4' 1fr / clamp(100px, 10vw, 300px) 1fr;
   height: 100vh;
   width: 100vw;
   padding: clamp(20px, 3vw, 50px);
@@ -125,9 +126,9 @@ h6 {
   width: clamp(300px, 90%, 1200px);
   display: grid;
   grid-template:
-    "gameMood gameMood" 50px
-    "gameLog gameBoard" 1fr
-    "restartBar restartBar" clamp(40px, 4vw, 60px) / clamp(110px, 15vw, 200px) 1fr;
+    'gameMood gameMood' 50px
+    'gameLog gameBoard' 1fr
+    'restartBar restartBar' clamp(40px, 4vw, 60px) / clamp(110px, 15vw, 200px) 1fr;
   box-shadow: var(--shadow-elevation-low);
   border-radius: 20px;
 }
@@ -170,6 +171,7 @@ h6 {
   position: absolute;
   top: 0;
   border: none;
+
   outline: none;
   border-radius: 5px;
   box-shadow: var(--shadow-elevation-low);
@@ -195,13 +197,13 @@ h6 {
 .gameLog p {
   font-size: clamp(0.8rem, 2vw, 1.2rem);
 }
-.playerA,
-.playerB {
+.playerX,
+.playerO {
   position: relative;
 }
 
-.playerA .done,
-.playerB .done {
+.playerX .done,
+.playerO .done {
   display: none;
 }
 
@@ -225,12 +227,18 @@ h6 {
 
 .cells .cell {
   transition: all 0.2s cubic-bezier(0.32, 0.91, 0.63, 1.18);
+
+  font-family: var(--font-slackside);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-slackside);
 }
 
+.cells .cell span {
+  font-size: 3rem;
+  line-height: 0;
+}
 .cells .cell:active {
   box-shadow: var(--shadow-elevation-medium);
 }
@@ -287,7 +295,7 @@ h6 {
 
 .restartBar button::before,
 .restartBar button::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   width: 50%;
@@ -315,8 +323,8 @@ h6 {
 @media only screen and (max-width: 600px) {
   .container {
     grid-template:
-      "block1 block2" 30px
-      "block4 block4" 1fr / clamp(100px, 10vw, 300px) 1fr;
+      'block1 block2' 30px
+      'block4 block4' 1fr / clamp(100px, 10vw, 300px) 1fr;
   }
 
   .block3 {

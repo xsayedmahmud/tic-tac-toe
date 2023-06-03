@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
     <link
       rel="shortcut icon"
       href="logo-icon/favicon_io/favicon.ico"
@@ -14,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,200;0,400;1,600&family=Slackside+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,200;0,400;1,600&family=Oswald:wght@200&family=Slackside+One&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -38,23 +39,23 @@
             </select>
           </div>
           <div class="gameLog">
-            <div class="playerA">
-              <h3>Player A</h3>
+            <div class="playerX">
+              <h3>Player (X)</h3>
               <input type="text" name="playerA" id="playerA" />
               <img src="logo-icon/edit.svg" alt="edit" class="edit" />
               <img src="logo-icon/done-700.svg" alt="done" class="done" />
-              <p class="scoreA">Score: 4 / 10</p>
+              <p class="score">Score: 0 / 0</p>
             </div>
-            <div class="playerB">
-              <h3>Player B</h3>
+            <div class="playerO">
+              <h3>Player (O)</h3>
               <input type="text" name="PlayerB" id="PlayerB" />
               <img src="logo-icon/edit.svg" alt="edit" class="edit" />
               <img src="logo-icon/done-700.svg" alt="done" class="done" />
-              <p class="scoreB">Score: 4 / 10</p>
+              <p class="score">Score: 0 / 0</p>
             </div>
             <div class="tie">
               <h3>Tie</h3>
-              <p>2 / 10</p>
+              <p class="tieScore">Score: 0 / 0</p>
             </div>
           </div>
           <div class="gameBoard">
