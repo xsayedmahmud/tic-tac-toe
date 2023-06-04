@@ -216,6 +216,37 @@ h6 {
   align-items: center;
   justify-content: center;
   padding: clamp(10px, 2vw, 20px);
+  position: relative;
+}
+
+.gameBoard .resultAnnounce {
+  width: max-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(1rem, 3vw, 2rem);
+
+  display: none;
+  flex-direction: column;
+  gap: clamp(5px, 0.5vw, 1.5rem);
+}
+
+.resultAnnounce p .spanSymbol {
+  font-size: clamp(3rem, 10vw, 10rem);
+  line-height: 0;
+  color: var(--color-2);
+}
+
+.resultAnnounce .playAgain {
+  width: max-content;
+  padding: clamp(2px, 0.3vw, 5px) clamp(10px, 2vw, 25px);
+  border: none;
+  border-radius: clamp(4px, 1vw, 10px);
+  background-color: var(--color-3);
+  cursor: pointer;
+  font-size: clamp(0.8rem, 3vw, 1.5rem);
+  color: var(--bg-color);
 }
 
 .gameBoard .cells {
@@ -223,11 +254,21 @@ h6 {
   aspect-ratio: 1 /1;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.32, 0.91, 0.63, 1.18);
+}
+
+.gameBoard .cells.none {
+  visibility: hidden;
+  transform: scale(0);
+  opacity: 0;
 }
 
 .cells .cell {
-  transition: all 0.2s cubic-bezier(0.32, 0.91, 0.63, 1.18);
-
+  transition: all 0.3s cubic-bezier(0.32, 0.91, 0.63, 1.18);
   font-family: var(--font-slackside);
   position: relative;
   display: flex;
@@ -236,9 +277,28 @@ h6 {
 }
 
 .cells .cell span {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 10vw, 10rem);
   line-height: 0;
+  margin-top: -3.2vw;
+  color: var(--color-2);
+  animation: symbolAnimation 0.3s cubic-bezier(0.32, 0.91, 0.63, 1.18);
+  user-select: none;
 }
+
+/* symbol animation */
+
+@keyframes symbolAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .cells .cell:active {
   box-shadow: var(--shadow-elevation-medium);
 }

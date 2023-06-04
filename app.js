@@ -96,45 +96,7 @@ const displayName = (() => {
   updateLog('.playerO', 'O');
 })();
 
-const gameController = (() => {
-  const playerX = player('X');
-  const playerO = player('O');
-  let currentPlayer = playerX;
-  let moveCount = 0;
-  let isGameOver = false;
-  let gameRound = 0;
-  let xScore = 0;
-  let oScore = 0;
-  let tieScore = 0;
-
-  const handleClick = (e) => {
-    const cell = e.target;
-
-    const index = Array.from(displayController.cells).findIndex(
-      (child) => child === cell
-    );
-
-    const row = Math.floor(index / 3);
-    const col = index % 3;
-
-    if (gameBoard.getCell(row, col) === '' && !isGameOver && !cell.clicked) {
-      gameBoard.setCell(row, col, currentPlayer.symbol);
-      displayController.updateCellDisplay(index, currentPlayer.symbol);
-      cell.clicked = true;
-
-      if (checkWinner(row, col)) {
-        handleWin(currentPlayer);
-      } else {
-        moveCount += 1;
-        if (moveCount === 9) {
-          handleWin(null);
-        } else {
-          currentPlayer = currentPlayer === playerX ? playerO : playerX;
-        }
-      }
-    }
-  };
-
+const gameLogic = (() => {
   const checkWinner = (row, col) => {
     const symbol = gameBoard.getCell(row, col);
 
@@ -177,38 +139,120 @@ const gameController = (() => {
     return false;
   };
 
+  return {
+    checkWinner,
+  };
+})();
+
+const gameController = (() => {
+  const playerX = player('X');
+  const playerO = player('O');
+  let currentPlayer = playerX;
+  let moveCount = 0;
+  let isGameOver = false;
+  let gameRound = 0;
+  let xScore = 0;
+  let oScore = 0;
+  let tieScore = 0;
+  const playerXScore = document.querySelector('.playerX .score');
+  const playerOScore = document.querySelector('.playerO .score');
+  const tie = document.querySelector('.tieScore');
+
+  const handleClick = (e) => {
+    const cell = e.target;
+
+    const index = Array.from(displayController.cells).findIndex(
+      (child) => child === cell
+    );
+
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+
+    if (gameBoard.getCell(row, col) === '' && !isGameOver && !cell.clicked) {
+      gameBoard.setCell(row, col, currentPlayer.symbol);
+      displayController.updateCellDisplay(index, currentPlayer.symbol);
+      cell.clicked = true;
+
+      if (gameLogic.checkWinner(row, col)) {
+        setTimeout(() => handleWin(currentPlayer), 1000);
+      } else {
+        moveCount += 1;
+        if (moveCount === 9) {
+          handleWin(null);
+        } else {
+          currentPlayer = currentPlayer === playerX ? playerO : playerX;
+        }
+      }
+    }
+  };
+
+  const updateAllScores = () => {
+    tie.textContent = `Score: ${tieScore} / ${gameRound}`;
+    playerXScore.textContent = `Score: ${xScore} / ${gameRound}`;
+    playerOScore.textContent = `Score: ${oScore} / ${gameRound}`;
+  };
+
   const handleWin = (winningPlayer) => {
     isGameOver = true;
     gameRound += 1;
     moveCount = 0;
-
-    const playerXScore = document.querySelector('.playerX .score');
-    const playerOScore = document.querySelector('.playerO .score');
-    const tie = document.querySelector('.tieScore');
-
-    const updateAllScores = () => {
-      tie.textContent = `Score: ${tieScore} / ${gameRound}`;
-      playerXScore.textContent = `Score: ${xScore} / ${gameRound}`;
-      playerOScore.textContent = `Score: ${oScore} / ${gameRound}`;
-    };
+    const cells = document.querySelector('.cells');
+    cells.classList.add('none');
+    const winnerAnnounce = document.querySelector('.resultAnnounce');
+    winnerAnnounce.style.display = 'flex';
+    const playerXName = document.querySelector('.playerX h3');
+    const playerOName = document.querySelector('.playerO h3');
+    const winnerSymbol = document.querySelector(
+      '.resultAnnounce p .spanSymbol'
+    );
+    const symbolText = document.querySelector('.resultAnnounce p .spanText');
+    const winnerName = document.querySelector('.resultAnnounce p:last-of-type');
+    const playAgain = document.querySelector('.resultAnnounce .playAgain');
 
     if (winningPlayer === null) {
       tieScore += 1;
       updateAllScores();
+      winnerSymbol.textContent = 'X O';
+      symbolText.textContent = '';
+      winnerName.textContent = `It's a Draw!`;
     } else if (winningPlayer.symbol === 'X') {
       xScore += 1;
       updateAllScores();
+      winnerSymbol.textContent = 'X';
+      symbolText.textContent = 'triumphs!';
+      winnerName.textContent = `Well done, ${playerXName.textContent}!`;
     } else if (winningPlayer.symbol === 'O') {
       oScore += 1;
       updateAllScores();
+      winnerSymbol.textContent = 'O';
+      symbolText.textContent = 'triumphs!';
+      winnerName.textContent = `Well done, ${playerOName.textContent}!`;
     }
 
-    gameBoard.restart();
-    currentPlayer = playerX;
-    isGameOver = false;
-    displayController.removeCellChild();
-    displayController.resetClick();
+    playAgain.addEventListener('click', () => {
+      winnerAnnounce.style.display = 'none';
+      cells.classList.remove('none');
+      gameBoard.restart();
+      currentPlayer = playerX;
+      isGameOver = false;
+      displayController.removeCellChild();
+      displayController.resetClick();
+    });
   };
+
+  const resetGame = (() => {
+    const reset = document.querySelector('.reset');
+    reset.addEventListener('click', () => {
+      xScore = 0;
+      oScore = 0;
+      tieScore = 0;
+      gameRound = 0;
+      updateAllScores();
+      gameBoard.restart();
+      displayController.removeCellChild();
+      displayController.resetClick();
+    });
+  })();
 
   displayController.addCellClickListener(handleClick);
 })();
