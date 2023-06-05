@@ -169,9 +169,9 @@ h6 {
 .gameLog input {
   width: 100%;
   position: absolute;
-  top: 0;
+  top: -2px;
   border: none;
-
+  border-top: 1px solid var(--color-2);
   outline: none;
   border-radius: 5px;
   box-shadow: var(--shadow-elevation-low);
@@ -179,6 +179,8 @@ h6 {
   display: none;
   color: var(--color-1);
   background-color: var(--bg-color);
+  height: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
 .gameLog img {
@@ -200,6 +202,11 @@ h6 {
 .playerX,
 .playerO {
   position: relative;
+}
+
+.playerX h3.turn,
+.playerO h3.turn {
+  color: var(--color-3);
 }
 
 .playerX .done,
@@ -224,12 +231,18 @@ h6 {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   font-size: clamp(1rem, 3vw, 2rem);
-
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: clamp(5px, 0.5vw, 1.5rem);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.32, 0.91, 0.63, 1.18);
+}
+
+.gameBoard .resultAnnounce.hide {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
 }
 
 .resultAnnounce p .spanSymbol {
@@ -254,7 +267,6 @@ h6 {
   aspect-ratio: 1 /1;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-
   visibility: visible;
   transform: scale(1);
   opacity: 1;

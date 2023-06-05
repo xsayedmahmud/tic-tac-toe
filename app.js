@@ -157,6 +157,10 @@ const gameController = (() => {
   const playerXScore = document.querySelector('.playerX .score');
   const playerOScore = document.querySelector('.playerO .score');
   const tie = document.querySelector('.tieScore');
+  const cells = document.querySelector('.cells');
+  const winnerAnnounce = document.querySelector('.resultAnnounce');
+  const playerXName = document.querySelector('.playerX h3');
+  const playerOName = document.querySelector('.playerO h3');
 
   const handleClick = (e) => {
     const cell = e.target;
@@ -181,8 +185,19 @@ const gameController = (() => {
           handleWin(null);
         } else {
           currentPlayer = currentPlayer === playerX ? playerO : playerX;
+          showPlayerTurn();
         }
       }
+    }
+  };
+
+  const showPlayerTurn = () => {
+    if (currentPlayer === playerX) {
+      playerXName.classList.add('turn');
+      playerOName.classList.remove('turn');
+    } else if (currentPlayer === playerO) {
+      playerOName.classList.add('turn');
+      playerXName.classList.remove('turn');
     }
   };
 
@@ -196,18 +211,18 @@ const gameController = (() => {
     isGameOver = true;
     gameRound += 1;
     moveCount = 0;
-    const cells = document.querySelector('.cells');
+
     cells.classList.add('none');
-    const winnerAnnounce = document.querySelector('.resultAnnounce');
-    winnerAnnounce.style.display = 'flex';
-    const playerXName = document.querySelector('.playerX h3');
-    const playerOName = document.querySelector('.playerO h3');
+    winnerAnnounce.classList.remove('hide');
+
     const winnerSymbol = document.querySelector(
       '.resultAnnounce p .spanSymbol'
     );
     const symbolText = document.querySelector('.resultAnnounce p .spanText');
     const winnerName = document.querySelector('.resultAnnounce p:last-of-type');
     const playAgain = document.querySelector('.resultAnnounce .playAgain');
+
+    let playerName;
 
     if (winningPlayer === null) {
       tieScore += 1;
@@ -220,23 +235,26 @@ const gameController = (() => {
       updateAllScores();
       winnerSymbol.textContent = 'X';
       symbolText.textContent = 'triumphs!';
-      winnerName.textContent = `Well done, ${playerXName.textContent}!`;
+      playerName = playerXName.textContent.slice(0, -4);
+      winnerName.textContent = `Well done, ${playerName}!`;
     } else if (winningPlayer.symbol === 'O') {
       oScore += 1;
       updateAllScores();
       winnerSymbol.textContent = 'O';
       symbolText.textContent = 'triumphs!';
-      winnerName.textContent = `Well done, ${playerOName.textContent}!`;
+      playerName = playerOName.textContent.slice(0, -4);
+      winnerName.textContent = `Well done, ${playerName}!`;
     }
 
     playAgain.addEventListener('click', () => {
-      winnerAnnounce.style.display = 'none';
+      winnerAnnounce.classList.add('hide');
       cells.classList.remove('none');
       gameBoard.restart();
       currentPlayer = playerX;
       isGameOver = false;
       displayController.removeCellChild();
       displayController.resetClick();
+      showPlayerTurn();
     });
   };
 
@@ -247,10 +265,17 @@ const gameController = (() => {
       oScore = 0;
       tieScore = 0;
       gameRound = 0;
+      currentPlayer = playerX;
+      isGameOver = false;
       updateAllScores();
+      showPlayerTurn();
       gameBoard.restart();
       displayController.removeCellChild();
       displayController.resetClick();
+      if (cells.classList.contains('none')) {
+        winnerAnnounce.classList.add('hide');
+        cells.classList.remove('none');
+      }
     });
   })();
 

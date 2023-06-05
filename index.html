@@ -35,12 +35,14 @@
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
               <option value="impossible">Impossible</option>
-              <option value="playAgainst">Play against a friend</option>
+              <option value="playAgainst" selected>
+                Play against a friend
+              </option>
             </select>
           </div>
           <div class="gameLog">
             <div class="playerX">
-              <h3>Player (X)</h3>
+              <h3 class="turn">Player (X)</h3>
               <input type="text" name="playerA" id="playerA" />
               <img src="logo-icon/edit.svg" alt="edit" class="edit" />
               <img src="logo-icon/done-700.svg" alt="done" class="done" />
@@ -70,7 +72,7 @@
               <div class="cell"></div>
               <div class="cell"></div>
             </div>
-            <div class="resultAnnounce">
+            <div class="resultAnnounce hide">
               <p>
                 <span class="spanSymbol">X </span>
                 <span class="spanText">triumphs!</span>
